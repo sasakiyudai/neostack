@@ -1,4 +1,4 @@
-### set .env files
+### ① set .env files
 
 ```
 cp db/sample.env db/.env
