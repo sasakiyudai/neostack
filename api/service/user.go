@@ -10,12 +10,12 @@ import (
 	"github.com/google/uuid"
 )
 
-func UserCreate(ctx context.Context, input model.NewUser) (*model.User, error) {
+func UserCreate(ctx context.Context, input model.NewUser) (*model.GormUser, error) {
 	db := config.GetDB()
 
 	input.Password = tools.HashPassword(input.Password)
 
-	user := model.User{
+	user := model.GormUser{
 		ID:       uuid.New().String(),
 		Name:     input.Name,
 		Email:    strings.ToLower(input.Email),
@@ -29,10 +29,10 @@ func UserCreate(ctx context.Context, input model.NewUser) (*model.User, error) {
 	return &user, nil
 }
 
-func UserGetByID(ctx context.Context, id string) (*model.User, error) {
+func UserGetByID(ctx context.Context, id string) (*model.GormUser, error) {
 	db := config.GetDB()
 
-	var user model.User
+	var user model.GormUser
 	if err := db.Model(user).Where("id = ?", id).Take(&user).Error; err != nil {
 		return nil, err
 	}
@@ -40,10 +40,10 @@ func UserGetByID(ctx context.Context, id string) (*model.User, error) {
 	return &user, nil
 }
 
-func UserGetByEmail(ctx context.Context, email string) (*model.User, error) {
+func UserGetByEmail(ctx context.Context, email string) (*model.GormUser, error) {
 	db := config.GetDB()
 
-	var user model.User
+	var user model.GormUser
 	if err := db.Model(user).Where("email LIKE ?", email).Take(&user).Error; err != nil {
 		return nil, err
 	}
