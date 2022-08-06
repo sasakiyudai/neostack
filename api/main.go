@@ -1,6 +1,7 @@
 package main
 
 import (
+	"neostack/directives"
 	"log"
 	"neostack/config"
 	"neostack/migration"
@@ -26,6 +27,9 @@ func main() {
 	db := config.GetDB()
 	sqlDB, _ := db.DB()
 	defer sqlDB.Close()
+
+	c := generated.Config{Resolvers: &graph.Resolver{}}
+	c.Directives.Auth = directives.Auth
 
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
 
