@@ -15,6 +15,8 @@ import (
 const defaultPort = "8080"
 
 func main() {
+	migration.MigrateTable()
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort
