@@ -1,6 +1,7 @@
 package main
 
 import (
+	"neostack/middlewares"
 	"neostack/directives"
 	"log"
 	"neostack/config"
@@ -12,6 +13,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/gorilla/mux"
 )
 
 const defaultPort = "8080"
@@ -28,14 +30,17 @@ func main() {
 	sqlDB, _ := db.DB()
 	defer sqlDB.Close()
 
+	router := mux.NewRouter()
+	router.Use(middlewares.AuthMiddleware)
+
 	c := generated.Config{Resolvers: &graph.Resolver{}}
 	c.Directives.Auth = directives.Auth
 
-	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
+	srv := handler.NewDefaultServer(generated.NewExecutableSchema(c))
 
-	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
-	http.Handle("/query", srv)
+	router.Handle("/", playground.Handler("GraphQL playground", "/query"))
+	router.Handle("/query", srv)
 
 	log.Printf("🚀 connect to http://localhost:%s/ for GraphQL playground", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	log.Fatal(http.ListenAndServe(":"+port, router))
 }
