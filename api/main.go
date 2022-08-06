@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"neostack/config"
+	"neostack/migration"
 	"neostack/graph"
 	"neostack/graph/generated"
 	"net/http"
