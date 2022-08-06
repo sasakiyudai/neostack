@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 	"neostack/graph/generated"
 	"neostack/graph/model"
 	"neostack/service"
@@ -33,7 +32,7 @@ func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error
 
 // Protected is the resolver for the protected field.
 func (r *queryResolver) Protected(ctx context.Context) (string, error) {
-	panic(fmt.Errorf("not implemented"))
+	return "Success", nil
 }
 
 // AuthOps returns generated.AuthOpsResolver implementation.
