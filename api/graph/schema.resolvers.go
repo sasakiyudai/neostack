@@ -31,6 +31,11 @@ func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error
 	return service.UserGetByID(ctx, id)
 }
 
+// Protected is the resolver for the protected field.
+func (r *queryResolver) Protected(ctx context.Context) (string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
 // AuthOps returns generated.AuthOpsResolver implementation.
 func (r *Resolver) AuthOps() generated.AuthOpsResolver { return &authOpsResolver{r} }
 
