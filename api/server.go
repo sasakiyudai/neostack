@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"neostack/config"
 	"neostack/graph"
 	"neostack/graph/generated"
 	"net/http"
@@ -18,6 +19,10 @@ func main() {
 	if port == "" {
 		port = defaultPort
 	}
+
+	db := config.GetDB()
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
 
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
 
