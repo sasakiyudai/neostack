@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:14.1
+    ports:
+      - "5432:5432"
+    env_file:
+      - db/.env
+    volumes:
+      - transcendence-db-data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    env_file:
+      - api/.env
+    tty: true
+    volumes:
+      - ./api:/go/src/app
+    command: air -c .air.toml
+
+  client:
+    build:
+      context: client
+    ports:
+      - "3000:3000"
+    env_file:
+      - client/.env
+    volumes:
+      - "./client:/app:delegated"
+      - /app/node_modules
+    working_dir: /app
+
+volumes:
+  transcendence-db-data:
