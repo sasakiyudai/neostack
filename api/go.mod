@@ -6,6 +6,7 @@ require (
 	github.com/99designs/gqlgen v0.17.13
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/google/uuid v1.3.0
+	github.com/gorilla/mux v1.8.0
 	github.com/joho/godotenv v1.4.0
 	github.com/vektah/gqlparser/v2 v2.4.7
 	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa
