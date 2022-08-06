@@ -8,26 +8,27 @@ import (
 	"fmt"
 	"neostack/graph/generated"
 	"neostack/graph/model"
+	"neostack/service"
 )
 
 // Login is the resolver for the login field.
 func (r *authOpsResolver) Login(ctx context.Context, obj *model.AuthOps, email string, password string) (interface{}, error) {
-	panic(fmt.Errorf("not implemented"))
+	return service.UserLogin(ctx, email, password)
 }
 
 // Register is the resolver for the register field.
 func (r *authOpsResolver) Register(ctx context.Context, obj *model.AuthOps, input model.NewUser) (interface{}, error) {
-	panic(fmt.Errorf("not implemented"))
+	return service.UserRegister(ctx, input)
 }
 
 // Auth is the resolver for the auth field.
 func (r *mutationResolver) Auth(ctx context.Context) (*model.AuthOps, error) {
-	panic(fmt.Errorf("not implemented"))
+	return &model.AuthOps{}, nil
 }
 
 // User is the resolver for the user field.
 func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error) {
-	panic(fmt.Errorf("not implemented"))
+	return service.UserGetByID(ctx, id)
 }
 
 // AuthOps returns generated.AuthOpsResolver implementation.
