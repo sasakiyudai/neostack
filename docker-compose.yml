@@ -22,7 +22,6 @@ services:
     tty: true
     volumes:
       - ./api:/go/src/app
-    command: air -c .air.toml
 
   client:
     build:
