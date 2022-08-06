@@ -8,5 +8,5 @@ import (
 func MigrateTable() {
 	db := config.GetDB()
 
-	db.AutoMigrate(&model.User{})
+	db.AutoMigrate(&model.GormUser{})
 }
