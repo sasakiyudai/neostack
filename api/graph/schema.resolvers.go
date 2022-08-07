@@ -34,9 +34,9 @@ func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error
 	return &model.User{ID: user.ID, Name: user.Name, Email: user.Email}, nil
 }
 
-// Protected is the resolver for the protected field.
-func (r *queryResolver) Protected(ctx context.Context) (string, error) {
-	return "Success", nil
+// Loggined is the resolver for the loggined field.
+func (r *queryResolver) Loggined(ctx context.Context) (bool, error) {
+	return true, nil
 }
 
 // AuthOps returns generated.AuthOpsResolver implementation.

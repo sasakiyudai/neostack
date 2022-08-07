@@ -30,7 +30,7 @@ type AuthOps {
 
 type Query {
   user(id: ID!): User! @goField(forceResolver: true)
-  protected: String! @goField(forceResolver: true) @auth
+  loggined: Boolean! @goField(forceResolver: true) @auth
 }
 
 type Mutation {

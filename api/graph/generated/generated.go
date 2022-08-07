@@ -56,8 +56,8 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		Protected func(childComplexity int) int
-		User      func(childComplexity int, id string) int
+		Loggined func(childComplexity int) int
+		User     func(childComplexity int, id string) int
 	}
 
 	User struct {
@@ -76,7 +76,7 @@ type MutationResolver interface {
 }
 type QueryResolver interface {
 	User(ctx context.Context, id string) (*model.User, error)
-	Protected(ctx context.Context) (string, error)
+	Loggined(ctx context.Context) (bool, error)
 }
 
 type executableSchema struct {
@@ -125,12 +125,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.Auth(childComplexity), true
 
-	case "Query.protected":
-		if e.complexity.Query.Protected == nil {
+	case "Query.loggined":
+		if e.complexity.Query.Loggined == nil {
 			break
 		}
 
-		return e.complexity.Query.Protected(childComplexity), true
+		return e.complexity.Query.Loggined(childComplexity), true
 
 	case "Query.user":
 		if e.complexity.Query.User == nil {
@@ -266,7 +266,7 @@ type AuthOps {
 
 type Query {
   user(id: ID!): User! @goField(forceResolver: true)
-  protected: String! @goField(forceResolver: true) @auth
+  loggined: Boolean! @goField(forceResolver: true) @auth
 }
 
 type Mutation {
@@ -610,8 +610,8 @@ func (ec *executionContext) fieldContext_Query_user(ctx context.Context, field g
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_protected(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_protected(ctx, field)
+func (ec *executionContext) _Query_loggined(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_loggined(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -625,7 +625,7 @@ func (ec *executionContext) _Query_protected(ctx context.Context, field graphql.
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().Protected(rctx)
+			return ec.resolvers.Query().Loggined(rctx)
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			if ec.directives.Auth == nil {
@@ -641,10 +641,10 @@ func (ec *executionContext) _Query_protected(ctx context.Context, field graphql.
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(string); ok {
+		if data, ok := tmp.(bool); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be string`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -656,19 +656,19 @@ func (ec *executionContext) _Query_protected(ctx context.Context, field graphql.
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(bool)
 	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_protected(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_loggined(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type Boolean does not have child fields")
 		},
 	}
 	return fc, nil
@@ -2902,7 +2902,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			out.Concurrently(i, func() graphql.Marshaler {
 				return rrm(innerCtx)
 			})
-		case "protected":
+		case "loggined":
 			field := field
 
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
@@ -2911,7 +2911,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_protected(ctx, field)
+				res = ec._Query_loggined(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}
