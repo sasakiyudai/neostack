@@ -1,0 +1,9 @@
+overwrite: true
+schema: "http://api:8080/query"
+documents: "graphql/*.ts"
+generates:
+  graphql/generated/graphql.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
