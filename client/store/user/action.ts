@@ -1,15 +1,9 @@
 import { ActionTypes } from "../actionTypes";
 import { UserActionTypes } from "./types";
 
-export const loggined = (): UserActionTypes => {
-	
+export const setIsLoggined = (isLoggined: boolean): UserActionTypes => {
   return {
-    type: ActionTypes.loggined,
-  };
-};
-
-export const login = (): UserActionTypes => {
-  return {
-    type: ActionTypes.login,
+    type: ActionTypes.setIsLoggined,
+    payload: { isLoggedIn: isLoggined },
   };
 };

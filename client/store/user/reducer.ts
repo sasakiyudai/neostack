@@ -10,10 +10,8 @@ export const UserReducer = (
   action: UserActionTypes
 ): User => {
   switch (action.type) {
-    case ActionTypes.login:
-      return { ...state, isLoggedIn: true };
-    case ActionTypes.loggined:
-      return { ...state, isLoggedIn: true };
+    case ActionTypes.setIsLoggined:
+      return { ...state, isLoggedIn: action.payload.isLoggedIn };
   }
   return state;
 };

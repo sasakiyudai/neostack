@@ -5,13 +5,9 @@ export type User = {
   isLoggedIn: boolean;
 };
 
-interface loginAction extends Action {
-  type: typeof ActionTypes.login;
+interface setIsLogginedAction extends Action {
+  type: typeof ActionTypes.setIsLoggined;
+  payload: { isLoggedIn: boolean };
 }
 
-interface logginedAction extends Action {
-  type: typeof ActionTypes.loggined;
-  pay
-}
-
-export type UserActionTypes = loginAction | logginedAction;
+export type UserActionTypes = setIsLogginedAction;
