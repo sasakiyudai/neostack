@@ -1,9 +1,87 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import type { NextPage } from "next";
+import Head from "next/head";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { CircularProgress } from "@mui/material";
+import styles from "../styles/Home.module.css";
+import { Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
+import { decrement, increment } from "../store/counter/action";
 
 const Home: NextPage = () => {
+  // const [state, setState] = useState({
+  //   isLoaded: false,
+  //   isLoggedIn: false,
+  //   menu_shown: true,
+  //   hide_menu_animation: 0,
+  //   show_menu_animation: 0,
+  //   marginLeft: "235px",
+  // });
+
+  // useEffect(() => {
+  //   componentStart();
+  // }, []);
+
+  // const componentStart = async () => {
+  //   let userResponse;
+
+  //   // Check if user is logged in (by seeing if there is a token in local storage)
+  //   if (localStorage.getItem("token")) {
+  //     try {
+  //       userResponse = await props.get_user_data();
+  //     } catch {
+  //       // If token is wrong then return back to login and clear token from localstorage
+  //       localStorage.setItem("token", "");
+  //       setState({ ...state, isLoaded: true });
+  //       return;
+  //     }
+  //     // Fetch the pages
+  //     await props.fetch_pages(userResponse.id);
+
+  //     // Update state
+  //     setState({ ...state, isLoaded: true, isLoggedIn: true });
+  //   } else {
+  //     // Update state
+  //     setState({ ...state, isLoaded: true });
+  //   }
+  // };
+
+  // const logout = () => {
+  //   // Change state to false so that we redirect to log in page.
+  //   setState({ ...state, isLoggedIn: false });
+
+  //   // Call logout redux action
+  //   props.logout();
+  // };
+
+  // const toggle_menu = (status) => {
+  //   setState({ ...state, menu_shown: status });
+  // };
+
+  // const close_menu_animation = () => {
+  //   setState((prevState) => ({ ...prevState, hide_menu_animation: 1 }));
+  // };
+
+  // const open_menu_animation = () => {
+  //   setState((prevState) => ({ ...prevState, show_menu_animation: 1 }));
+  // };
+
+  // if (!state.isLoaded) return <CircularProgress />;
+
+  // if (!state.isLoggedIn) return <Navigate to="/login" />;
+
+  const countState = useSelector((state: RootState) => state.count);
+  const dispatch = useDispatch();
+
+  const OnIncrement = () => {
+    dispatch(increment());
+  };
+
+  const OnDecrement = () => {
+    dispatch(decrement());
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -12,61 +90,11 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+      {countState.value}
+      <button onClick={OnIncrement}>+1</button>
+      <button onClick={OnDecrement}>-1</button>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
