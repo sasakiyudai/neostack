@@ -8,6 +8,7 @@ import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { decrement, increment } from "../store/counter/action";
+import { withAuthentication } from "../components/Authentication";
 
 const Home: NextPage = () => {
   const [state, setState] = useState({
@@ -97,4 +98,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default withAuthentication(Home);
