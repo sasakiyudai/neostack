@@ -2,6 +2,5 @@ export const ActionTypes = {
   increment: "INCREMENT",
   decrement: "DECREMENT",
 
-  login: "LOGIN",
-  loggined: "LOGGINED",
+  setIsLoggined: "SET_IS_LOGGINED",
 } as const;
