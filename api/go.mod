@@ -1,6 +1,6 @@
 module neostack
 
-go 1.17
+go 1.19
 
 require (
 	github.com/99designs/gqlgen v0.17.13
@@ -8,8 +8,8 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/mux v1.8.0
 	github.com/joho/godotenv v1.4.0
-	github.com/vektah/gqlparser/v2 v2.4.7
-	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa
+	github.com/vektah/gqlparser/v2 v2.4.6
+	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
 	gorm.io/driver/postgres v1.3.8
 	gorm.io/gorm v1.23.8
 )
