@@ -1,10 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import { useEffect, useState } from "react";
-import { CircularProgress } from "@mui/material";
 import styles from "../styles/Home.module.css";
-import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { decrement, increment } from "../store/counter/action";
