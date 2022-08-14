@@ -1,9 +1,9 @@
 import { ActionTypes } from "../actionTypes";
 import { UserActionTypes } from "./types";
 
-export const setIsLoggined = (isLoggined: boolean): UserActionTypes => {
+export const setIsLoggined = (isLoggedIn: boolean): UserActionTypes => {
   return {
     type: ActionTypes.setIsLoggined,
-    payload: { isLoggedIn: isLoggined },
+    payload: { isLoggedIn },
   };
 };
